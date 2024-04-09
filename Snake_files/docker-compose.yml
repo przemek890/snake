@@ -1,0 +1,19 @@
+version: '3'
+services:
+  builder:
+    build:
+      context: build
+      dockerfile: ./Dockerfile
+    image: snake_builder:latest
+    volumes:
+      - ./artifacts:/snake/dist
+
+  tester:
+    build:
+      context: tests
+      dockerfile: ./Dockerfile
+    image: snake_tester:latest
+    depends_on:
+      - builder
+    volumes:
+      - ./artifacts:/snake/dist

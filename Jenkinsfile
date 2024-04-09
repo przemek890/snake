@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO = 'https://github.com/przemek890/snake.git'
+        GIT_CRED_ID = 'dad47e07-a5f8-46fc-8c3d-ba0d5ff7ef2f'
+        GIT_BRANCH = 'master'
+    }
+
+    triggers {
+        pollSCM('* * * * *')
+    }
+
+    stages {
+
+        stage('Collect') {
+            steps {
+                git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building..."
+                sh '''
+                cd Snake_files/build
+                docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./Dockerfile .
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "Testing..."
+                sh '''
+                cd Snake_files/tests
+                docker build -t snake_tester:latest -f ./Dockerfile .
+                '''
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying..."
+                sh '''
+                cd Snake_files
+                docker-compose up
+                docker-compose logs builder > log.txt
+                docker-compose logs tester >> log.txt
+
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                echo "Publishing..."
+                sh '''
+                TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/docker-compose.yml ./Snake_files/tests ./Snake_files/build ./Snake_files/log.txt
+                ls -l
+                cd Snake_files/
+                docker compose down
+                '''
+                echo "Archiving the artifact..."
+                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
+            }
+        }
+    }
+}
