@@ -30,7 +30,7 @@ pipeline {
                 sh '''
                 cd Snake_files/build
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./Dockerfile .
-                docker run -d --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
+                docker run -d --name snake_builder -v ../artifacts:/snake/dist snake_builder:latest
                 docker logs snake_builder > ../log/log_builder.txt
                 '''
             }
@@ -42,7 +42,7 @@ pipeline {
                 sh '''
                 cd Snake_files/tests
                 docker build -t snake_tester:latest -f ./Dockerfile .
-                docker run -d --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
+                docker run -d --name snake_tester -v ../artifacts:/snake/dist snake_tester:latest
                 docker logs snake_tester > ../log/log_tester.txt
                 '''
             }
@@ -53,7 +53,7 @@ pipeline {
                 sh '''
                 cd Snake_files/deploy
                 docker build -t snake_deployer:latest -f ./Dockerfile .
-                docker run -d --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
+                docker run -d --name snake_deployer -v ../artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
                 docker logs snake_deployer > ../log/log_deployer.txt
                 '''
             }
