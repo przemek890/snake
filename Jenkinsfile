@@ -40,6 +40,7 @@ pipeline {
                 sh '''
                 cd Snake_files/build
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./Dockerfile .
+                docker run -d --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
                 '''
             }
         }
@@ -50,6 +51,7 @@ pipeline {
                 sh '''
                 cd Snake_files/tests
                 docker build -t snake_tester:latest -f ./Dockerfile .
+                docker run -d --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
                 '''
             }
         }
@@ -59,13 +61,13 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
+                docker run -d --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
                 if [ ! -d "log" ]; then
                   mkdir log
                 fi
-                docker-compose up
-                docker-compose logs builder > log/log_builder.txt
-                docker-compose logs tester > log/log_tester.txt
-                docker-compose logs deployer > log/log_deployer.txt
+                docker logs snake_builder > log/log_builder.txt
+                docker logs snake_tester > log/log_tester.txt
+                docker logs snake_deployer > log/log_deployer.txt
                 '''
             }
         }
@@ -78,7 +80,8 @@ pipeline {
                 cd Snake_files/
                 ls -l
                 tar -czf Artifact_$TIMESTAMP.tar.gz ./
-                docker compose down
+                docker stop $(docker ps -a -q)
+                docker rm $(docker ps -a -q)
                 '''
                 echo "Archiving the artifact..."
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
