@@ -59,29 +59,29 @@ pipeline {
                 '''
             }
         }
-
-       stage('Publish') {
-           steps {
-               echo "Publishing..."
-               sh '''
-               TIMESTAMP=$(date +%Y%m%d%H%M%S)
-               tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log
-               '''
-               echo "Archiving the artifact..."
-               archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
-               //////////////////////////////////////////////////////////////////
-               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-               sh 'docker push Snake_files/snake_deployer:${params.VERSION}'
-               sh 'docker logout'
-               //////////////////////////////////////////////////////////////////
-               emailext (
-                   from: 'kikpl899@gmail.com',
-                   body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
-                   subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
-                   to: 'przemek.899@wp.pl',
-                   attachmentsPattern: '**/Snake_files/log/*.txt'
-               )
-           }
-       }
+        stage('Publish') {
+            steps {
+                echo "Publishing..."
+                sh '''
+                TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log
+                '''
+                echo "Archiving the artifact..."
+                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
+                //////////////////////////////////////////////////////////////////
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:${params.VERSION}'
+                sh 'docker push przemek899/snake_deployer:${params.VERSION}'
+                sh 'docker logout'
+                //////////////////////////////////////////////////////////////////
+                emailext (
+                    from: 'kikpl899@gmail.com',
+                    body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
+                    subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
+                    to: 'przemek.899@wp.pl',
+                    attachmentsPattern: '**/Snake_files/log/*.txt'
+                )
+            }
+        }
     }
 }
