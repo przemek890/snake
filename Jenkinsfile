@@ -5,6 +5,7 @@ pipeline {
         GIT_REPO = 'https://github.com/przemek890/snake.git'
         GIT_CRED_ID = 'dad47e07-a5f8-46fc-8c3d-ba0d5ff7ef2f'
         GIT_BRANCH = 'master'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-token')
         HOST_IP = '192.168.100.83:0' // may change
     }
 
@@ -69,15 +70,9 @@ pipeline {
                echo "Archiving the artifact..."
                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
                //////////////////////////////////////////////////////////////////
-               script {
-                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
-                       def app = docker.image("snake_deployer:latest")
-                       app.tag("przemek899/snake_deployer:${env.BUILD_NUMBER}")
-                       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
-                           app.push("przemek899/snake_deployer:${env.BUILD_NUMBER}")
-                       }
-                   }
-               }
+               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+               sh 'docker push Snake_files/snake_deployer:${params.VERSION}'
+               sh 'docker logout'
                //////////////////////////////////////////////////////////////////
                emailext (
                    from: 'kikpl899@gmail.com',
