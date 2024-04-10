@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     tk \
     tcl \
     libtk8.6 \
-    numpy \
+    numpy
 
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
