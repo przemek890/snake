@@ -69,15 +69,13 @@ pipeline {
                echo "Archiving the artifact..."
                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
                //////////////////////////////////////////////////////////////////
-               script {
-                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
-                       def app = docker.image("snake_deployer:latest")
-                       app.tag("przemek899/snake_deployer:${env.BUILD_NUMBER}")
-                       docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
-                           app.push("przemek899/snake_deployer:${env.BUILD_NUMBER}")
-                       }
-                   }
-               }
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
+                    def app = docker.image("snake_deployer:latest")
+                    app.tag("przemek899/snake_deployer:${env.BUILD_NUMBER}")
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
+                        app.push("przemek899/snake_deployer:${env.BUILD_NUMBER}")
+                    }
+                }
                //////////////////////////////////////////////////////////////////
                emailext (
                    from: 'kikpl899@gmail.com',
