@@ -36,15 +36,14 @@ pipeline {
 
 
         stage('Collect') {
-             steps {
+            steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
                 script {
-                    cd Snake_files
-                    if (!fileExists('log')) {
-                        sh 'mkdir log'
+                    if (!fileExists('Snake_files/log')) {
+                        sh 'mkdir Snake_files/log'
                     }
                 }
-             }
+            }
         }
 
 
