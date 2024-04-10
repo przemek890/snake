@@ -72,8 +72,8 @@ pipeline {
                 sh '''
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                 BUILD_NUMBER=''' + env.BUILD_NUMBER + '''
-                docker tag snake_deployer:latest przemek899/snake_deployer:$BUILD_NUMBER.0.0
-                docker push przemek899/snake_deployer:$BUILD_NUMBER.0.0
+                docker tag snake_deployer:latest przemek899/snake_deployer:latest
+                docker push przemek899/snake_deployer:latest
                 docker logout
                 '''
                 //////////////////////////////////////////////////////////////////
