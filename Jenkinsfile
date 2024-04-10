@@ -12,21 +12,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean') {
-            steps {
-              cleanWs()
-              sh
-              '''
-              if [ "$(docker ps -a -q)" ]; then
-                docker rm $(docker ps -a -q)
-              fi
-
-              if [ "$(docker images -q)" ]; then
-                docker rmi $(docker images -q)
-              fi
-              '''
-            }
-        }
 
         stage('Collect') {
             steps {
