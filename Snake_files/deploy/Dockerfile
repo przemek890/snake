@@ -6,4 +6,6 @@ COPY --from=snake_builder /snake /app
 
 WORKDIR /app
 
+RUN pip install --no-cache-dir numpy
+
 CMD ["python3", "run.py"]
