@@ -16,15 +16,15 @@ pipeline {
             steps {
                 cleanWs()
                 script {
-                    sh '''
-                    if docker ps -a -q | read; then
-                        docker stop $(docker ps -a -q)
-                        docker rm $(docker ps -a -q)
-                    fi
-                    if docker images -q | read; then
-                        docker rmi -f $(docker images -q)
-                    fi
-                    '''
+                   # Usuń wszystkie kontenery Docker, jeśli istnieją
+                   if [ "$(docker ps -a -q)" ]; then
+                     docker rm $(docker ps -a -q)
+                   fi
+
+                   # Usuń wszystkie obrazy Docker, jeśli istnieją
+                   if [ "$(docker images -q)" ]; then
+                     docker rmi $(docker images -q)
+                   fi
                 }
             }
         }
@@ -34,6 +34,9 @@ pipeline {
             steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
             }
+            if [ ! -d "log" ]; then
+              mkdir log
+            fi
         }
 
         stage('Build') {
@@ -43,6 +46,7 @@ pipeline {
                 cd Snake_files/build
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./Dockerfile .
                 docker run -d --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
+                docker logs snake_builder > log/log_builder.txt
                 '''
             }
         }
@@ -54,6 +58,7 @@ pipeline {
                 cd Snake_files/tests
                 docker build -t snake_tester:latest -f ./Dockerfile .
                 docker run -d --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
+                docker logs snake_tester > log/log_tester.txt
                 '''
             }
         }
@@ -61,14 +66,9 @@ pipeline {
             steps {
                 echo "Deploying..."
                 sh '''
-                cd Snake_files
-                docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
+                cd Snake_files/deploy
+                docker build -t snake_deployer:latest -f ./Dockerfile .
                 docker run -d --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
-                if [ ! -d "log" ]; then
-                  mkdir log
-                fi
-                docker logs snake_builder > log/log_builder.txt
-                docker logs snake_tester > log/log_tester.txt
                 docker logs snake_deployer > log/log_deployer.txt
                 '''
             }
