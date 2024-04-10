@@ -15,7 +15,7 @@ pipeline {
         stage('Clean') {
             steps {
                 cleanWs()
-                script {
+                sh '''
                    # Usuń wszystkie kontenery Docker, jeśli istnieją
                    if [ "$(docker ps -a -q)" ]; then
                      docker rm $(docker ps -a -q)
@@ -25,7 +25,7 @@ pipeline {
                    if [ "$(docker images -q)" ]; then
                      docker rmi $(docker images -q)
                    fi
-                }
+                '''
             }
         }
 
