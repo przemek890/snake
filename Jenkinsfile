@@ -36,13 +36,15 @@ pipeline {
 
 
         stage('Collect') {
-            steps {
+             steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
-            }
-            if [ ! -d "log" ]; then
-              mkdir log
-            fi
-        }
+                script {
+                    if (!fileExists('log')) {
+                        sh 'mkdir log'
+                    }
+                }
+             }
+
 
         stage('Build') {
             steps {
