@@ -31,6 +31,7 @@ pipeline {
                 cd Snake_files
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./build/Dockerfile .
                 docker run -d --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
+                echo docker logs snake_builder
                 docker logs snake_builder > ./log/log_builder.txt
                 '''
             }
