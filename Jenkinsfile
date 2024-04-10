@@ -12,37 +12,14 @@ pipeline {
     }
 
     stages {
-        stage('Clean') {
-            steps {
-                cleanWs()
-                sh '''
-                   # Usuń wszystkie kontenery Docker, jeśli istnieją
-                   if docker ps -a -q | read; then
-                     docker stop -f $(docker ps -a -q)
-                     docker rm -f $(docker ps -a -q)
-                   fi
-
-                   # Usuń wszystkie obrazy Docker, jeśli istnieją
-                   if docker images -q | read; then
-                     docker rmi -f $(docker images -q)
-                   fi
-
-                   docker ps -a
-                   docker images
-                '''
-            }
-        }
-
-
 
         stage('Collect') {
             steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
-                script {
-                    if (!fileExists('Snake_files/log')) {
-                        sh 'mkdir Snake_files/log'
-                    }
-                }
+                sh '''
+                    chmod +x clear.sh
+                    ./clear.sh
+                '''
             }
         }
 
