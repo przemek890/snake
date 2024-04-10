@@ -71,10 +71,11 @@ pipeline {
                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
 
                emailext (
-                   subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
-                   body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
-                   to: 'przemek.899@wp.pl',
                    attachmentsPattern: './Snake_files/log/*.txt'
+                   from: 'kikpl899@gmail.com',
+                   body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
+                   subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
+                   to: 'przemek.899@wp.pl'
                )
            }
        }
