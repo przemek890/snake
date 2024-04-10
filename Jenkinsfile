@@ -54,7 +54,9 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
-                docker run --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
+                echo IP:
+                ipconfig getifaddr en0
+                docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY=$(ipconfig getifaddr en0):0 snake_deployer:latest
                 docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
