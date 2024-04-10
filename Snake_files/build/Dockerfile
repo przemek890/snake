@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     python3-dev \
     libmemcached-dev \
-    python-tk
+    python3-tk
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
 
