@@ -15,6 +15,8 @@ pipeline {
         stage('Clean') {
             steps {
               cleanWs()
+              sh
+              '''
               if [ "$(docker ps -a -q)" ]; then
                 docker rm $(docker ps -a -q)
               fi
@@ -22,6 +24,7 @@ pipeline {
               if [ "$(docker images -q)" ]; then
                 docker rmi $(docker images -q)
               fi
+              '''
             }
         }
 
