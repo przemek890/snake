@@ -71,7 +71,7 @@ pipeline {
                //////////////////////////////////////////////////////////////////
                script {
                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
-                       def app = docker.build("przemek899/snake_deployer:${env.BUILD_NUMBER}")
+                       def app = docker.image("snake_deployer:latest").tag("przemek899/snake_deployer:${env.BUILD_NUMBER}")
                        app.push()
                    }
                }
