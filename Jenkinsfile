@@ -71,7 +71,7 @@ pipeline {
                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
 
                emailext (
-                   attachmentsPattern: './Snake_files/log/*.txt'
+                   attachmentsPattern: './Snake_files/log/*.txt',
                    from: 'kikpl899@gmail.com',
                    body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
                    subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
