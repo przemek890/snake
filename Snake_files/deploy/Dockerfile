@@ -1,5 +1,5 @@
 # Jedynie niezbędne zależności do wdrożenia
-FROM python3:latest
+FROM python:3
 
 # Skopiowanie skompilowanego kodu źródłowy i zależności z obrazu budowy
 COPY --from=snake_builder /snake /app
