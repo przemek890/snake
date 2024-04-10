@@ -47,6 +47,8 @@ pipeline {
                   mkdir log
                 fi
                 docker-compose up
+                docker ps -a
+                docker images
                 docker-compose logs builder > log/log_builder.txt
                 docker-compose logs tester > log/log_tester.txt
                 docker-compose logs deployer > log/log_deployer.txt

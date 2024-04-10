@@ -15,8 +15,6 @@ services:
     image: snake_tester:latest
     depends_on:
       - builder
-    volumes:
-      - ./artifacts:/snake/dist
 
   deploy:
     build:
@@ -26,7 +24,6 @@ services:
       - tester
       - builder
     volumes:
-      - ./artifacts:/snake/dist
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=host.docker.internal:0
