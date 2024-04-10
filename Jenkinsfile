@@ -12,6 +12,19 @@ pipeline {
     }
 
     stages {
+        stage('Clean') {
+            steps {
+              cleanWs()
+              if [ "$(docker ps -a -q)" ]; then
+                docker rm $(docker ps -a -q)
+              fi
+
+              if [ "$(docker images -q)" ]; then
+                docker rmi $(docker images -q)
+              fi
+            }
+        }
+
         stage('Collect') {
             steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
