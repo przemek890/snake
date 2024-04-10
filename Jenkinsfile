@@ -18,15 +18,17 @@ pipeline {
                 script {
                     sh '''
                     if docker ps -a -q | read; then
+                        docker stop $(docker ps -a -q)
                         docker rm $(docker ps -a -q)
                     fi
                     if docker images -q | read; then
-                        docker rmi $(docker images -q)
+                        docker rmi -f $(docker images -q)
                     fi
                     '''
                 }
             }
         }
+
 
         stage('Collect') {
             steps {
