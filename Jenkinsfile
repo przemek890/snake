@@ -15,6 +15,7 @@ pipeline {
 
         stage('Collect') {
             steps {
+                cleanWs()
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
                 sh '''
                     chmod +x clear.sh
@@ -30,9 +31,7 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./build/Dockerfile .
-                docker run -d --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
-                echo gggggggggg
-                docker logs snake_builder
+                docker run --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
                 docker logs snake_builder > ./log/log_builder.txt
                 '''
             }
@@ -44,7 +43,7 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_tester:latest -f ./tests/Dockerfile .
-                docker run -d --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
+                docker run --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
                 docker logs snake_tester > ./log/log_tester.txt
                 '''
             }
@@ -55,7 +54,7 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
-                docker run -d --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
+                docker run --name snake_deployer -v ./artifacts:/snake/dist -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=host.docker.internal:0 snake_deployer:latest
                 docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
