@@ -17,3 +17,20 @@ services:
       - builder
     volumes:
       - ./artifacts:/snake/dist
+
+  deploy:
+    build:
+      context: deploy
+      dockerfile: ./Dockerfile
+    image: snake_deployer:latest
+    depends_on:
+      - tester
+      - builder
+    volumes:
+      - ./artifacts:/snake/dist
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=host.docker.internal:0
+    command: [ "python3", "run.py" ]
+
+

@@ -43,10 +43,11 @@ pipeline {
                 echo "Deploying..."
                 sh '''
                 cd Snake_files
+                docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
                 docker-compose up
                 docker-compose logs builder > log.txt
                 docker-compose logs tester >> log.txt
-
+                docker-compose logs deployer >> log.txt
                 '''
             }
         }
@@ -56,7 +57,7 @@ pipeline {
                 echo "Publishing..."
                 sh '''
                 TIMESTAMP=$(date +%Y%m%d%H%M%S)
-                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/docker-compose.yml ./Snake_files/tests ./Snake_files/build ./Snake_files/log.txt
+                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/docker-compose.yml ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log.txt
                 ls -l
                 cd Snake_files/
                 docker compose down
