@@ -80,8 +80,6 @@ pipeline {
                 cd Snake_files/
                 ls -l
                 tar -czf Artifact_$TIMESTAMP.tar.gz ./
-                docker stop $(docker ps -a -q)
-                docker rm $(docker ps -a -q)
                 '''
                 echo "Archiving the artifact..."
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
