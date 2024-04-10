@@ -58,7 +58,7 @@ pipeline {
                 echo "Deploying..."
                 sh '''
                 cd Snake_files
-
+                docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
                 if [ ! -d "log" ]; then
                   mkdir log
                 fi
@@ -67,7 +67,7 @@ pipeline {
                 docker-compose up
                 docker-compose logs builder > log/log_builder.txt
                 docker-compose logs tester > log/log_tester.txt
-
+                docker-compose logs deployer > log/log_deployer.txt
                 '''
             }
         }
