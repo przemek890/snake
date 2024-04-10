@@ -70,8 +70,8 @@ pipeline {
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
                 //////////////////////////////////////////////////////////////////
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:${params.VERSION}'
-                sh 'docker push przemek899/snake_deployer:${params.VERSION}'
+                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:${TIMESTAMP}'
+                sh 'docker push przemek899/snake_deployer:${TIMESTAMP}'
                 sh 'docker logout'
                 //////////////////////////////////////////////////////////////////
                 emailext (
