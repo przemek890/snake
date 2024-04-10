@@ -12,7 +12,6 @@ pipeline {
     }
 
     stages {
-
         stage('Collect') {
             steps {
                 git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CRED_ID}", url: "${GIT_REPO}"
