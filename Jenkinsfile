@@ -64,9 +64,7 @@ pipeline {
                 echo "Publishing..."
                 sh '''
                 TIMESTAMP=$(date +%Y%m%d%H%M%S)
-                cd Snake_files/
-                ls -l
-                tar -czf Artifact_$TIMESTAMP.tar.gz ./artifacts ./tests ./build ./deploy ./log
+                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log
                 '''
                 echo "Archiving the artifact..."
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
