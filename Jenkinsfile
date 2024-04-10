@@ -54,7 +54,7 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
-                docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
+                timeout 10s docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
                 docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
@@ -70,8 +70,8 @@ pipeline {
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
                 //////////////////////////////////////////////////////////////////
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:latest'
-                sh 'docker push przemek899/snake_deployer:latest'
+                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:${env.BUILD_NUMBER}.0.0'
+                sh 'docker push przemek899/snake_deployer:${env.BUILD_NUMBER}.0.0'
                 sh 'docker logout'
                 //////////////////////////////////////////////////////////////////
                 emailext (
