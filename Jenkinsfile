@@ -18,13 +18,13 @@ pipeline {
                 sh '''
                    # Usuń wszystkie kontenery Docker, jeśli istnieją
                    if docker ps -a -q | read; then
-                     docker stop $(docker ps -a -q)
-                     docker rm $(docker ps -a -q)
+                     docker stop -f $(docker ps -a -q)
+                     docker rm -f $(docker ps -a -q)
                    fi
 
                    # Usuń wszystkie obrazy Docker, jeśli istnieją
                    if docker images -q | read; then
-                     docker rmi $(docker images -q)
+                     docker rmi -f $(docker images -q)
                    fi
 
                    docker ps -a
