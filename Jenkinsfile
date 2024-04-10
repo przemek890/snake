@@ -12,6 +12,21 @@ pipeline {
     }
 
     stages {
+        stage('Clean') {
+            steps {
+                cleanWs()
+                script {
+                    sh '''
+                    if docker ps -a -q | read; then
+                        docker rm $(docker ps -a -q)
+                    fi
+                    if docker images -q | read; then
+                        docker rmi $(docker images -q)
+                    fi
+                    '''
+                }
+            }
+        }
 
         stage('Collect') {
             steps {
