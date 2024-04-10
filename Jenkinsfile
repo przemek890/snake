@@ -17,17 +17,22 @@ pipeline {
                 cleanWs()
                 sh '''
                    # Usuń wszystkie kontenery Docker, jeśli istnieją
-                   if [ "$(docker ps -a -q)" ]; then
+                   if docker ps -a -q | read; then
+                     docker stop $(docker ps -a -q)
                      docker rm $(docker ps -a -q)
                    fi
 
                    # Usuń wszystkie obrazy Docker, jeśli istnieją
-                   if [ "$(docker images -q)" ]; then
+                   if docker images -q | read; then
                      docker rmi $(docker images -q)
                    fi
+
+                   docker ps -a
+                   docker images
                 '''
             }
         }
+
 
 
         stage('Collect') {
