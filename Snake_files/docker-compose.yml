@@ -23,10 +23,7 @@ services:
     depends_on:
       - tester
       - builder
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    environment:
-      - DISPLAY=host.docker.internal:0
+
 
 
 
