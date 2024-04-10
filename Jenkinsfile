@@ -25,7 +25,6 @@ pipeline {
             }
         }
 
-
         stage('Build') {
             steps {
                 echo "Building..."
@@ -33,6 +32,7 @@ pipeline {
                 cd Snake_files
                 docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./build/Dockerfile .
                 docker run --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
+                docker logs snake_builder > ./log/log_builder.txt
                 '''
             }
         }
@@ -44,6 +44,7 @@ pipeline {
                 cd Snake_files
                 docker build -t snake_tester:latest -f ./tests/Dockerfile .
                 docker run --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
+                docker logs snake_tester > ./log/log_tester.txt
                 '''
             }
         }
@@ -54,25 +55,28 @@ pipeline {
                 cd Snake_files
                 docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
                 docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
+                docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
         }
 
-        stage('Publish') {
-            steps {
-                echo "Publishing..."
-                sh '''
-                TIMESTAMP=$(date +%Y%m%d%H%M%S)
+       stage('Publish') {
+           steps {
+               echo "Publishing..."
+               sh '''
+               TIMESTAMP=$(date +%Y%m%d%H%M%S)
+               tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log
+               '''
+               echo "Archiving the artifact..."
+               archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
 
-                docker logs snake_builder > ./Snake_files/log/log_builder.txt
-                docker logs snake_tester > ./Snake_files/log/log_tester.txt
-                docker logs snake_deployer > ./Snake_files/log/log_deployer.txt
-
-                tar -czf Artifact_$TIMESTAMP.tar.gz ./Snake_files/artifacts ./Snake_files/tests ./Snake_files/build ./Snake_files/deploy ./Snake_files/log
-                '''
-                echo "Archiving the artifact..."
-                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
-            }
-        }
+               emailext (
+                   subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - Log Files",
+                   body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
+                   to: 'przemek.899@wp.pl',
+                   attachmentsPattern: './Snake_files/log/*.txt'
+               )
+           }
+       }
     }
 }
