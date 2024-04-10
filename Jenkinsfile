@@ -69,10 +69,13 @@ pipeline {
                 echo "Archiving the artifact..."
                 archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
                 //////////////////////////////////////////////////////////////////
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker tag snake_deployer:latest przemek899/snake_deployer:${env.BUILD_NUMBER}.0.0'
-                sh 'docker push przemek899/snake_deployer:${env.BUILD_NUMBER}.0.0'
-                sh 'docker logout'
+                sh '''
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                BUILD_NUMBER=''' + env.BUILD_NUMBER + '''
+                docker tag snake_deployer:latest przemek899/snake_deployer:$BUILD_NUMBER.0.0
+                docker push przemek899/snake_deployer:$BUILD_NUMBER.0.0
+                docker logout
+                '''
                 //////////////////////////////////////////////////////////////////
                 emailext (
                     from: 'kikpl899@gmail.com',
