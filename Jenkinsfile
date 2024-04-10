@@ -13,7 +13,6 @@ pipeline {
     }
 
     stages {
-
         stage('Collect') {
             steps {
                 cleanWs()
@@ -69,7 +68,14 @@ pipeline {
                '''
                echo "Archiving the artifact..."
                archiveArtifacts artifacts: 'Artifact_*.tar.gz', fingerprint: true
-
+               //////////////////////////////////////////////////////////////////
+               script {
+                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-token') {
+                       def app = docker.build("przemek899/snake_deployer:${env.BUILD_NUMBER}")
+                       app.push()
+                   }
+               }
+               //////////////////////////////////////////////////////////////////
                emailext (
                    from: 'kikpl899@gmail.com',
                    body: "Please find the attached log files for Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}).\nHOST_IP = '${HOST_IP}'",
