@@ -4,6 +4,7 @@ setup(
     name='Snake',
     version='0.1',
     packages=find_packages(),
+    py_modules=['run'],
     install_requires=[
         'pytest',
         'matplotlib'
