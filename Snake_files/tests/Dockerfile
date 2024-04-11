@@ -1,3 +1,4 @@
 FROM snake_builder:latest
 
-RUN python3 -m pytest tests
+RUN python3 -m pytest
+
