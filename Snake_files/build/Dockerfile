@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     tk \
     tcl \
     libtk8.6 \
-    python-tk
 
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
@@ -20,7 +19,7 @@ RUN pip install -r requirements.txt
 
 RUN python3 setup.py install
 
-CMD python3 setup.py bdist_wheel && if [ ! -f /snake/dist/*.whl ]; then cp dist/*.whl /snake/dist/; fi
+CMD rm -f /snake/dist/*.whl && python3 setup.py bdist_wheel && cp dist/*.whl /snake/dist/
 
 RUN python3 setup.py clean --all
 
