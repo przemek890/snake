@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev \
     tk \
     tcl \
-    libtk8.6 \
-    curl
+    libtk8.6
 
 
 

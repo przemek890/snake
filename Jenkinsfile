@@ -30,7 +30,7 @@ pipeline {
                 echo "Building..."
                 sh '''
                 cd Snake_files
-                docker build -t snake_builder:latest --build-arg GIT_TOKEN=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 -f ./build/Dockerfile .
+                docker build --no-cache -t snake_builder:latest --build-arg GIT_TOKEN=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  -f ./build/Dockerfile .
                 docker run --name snake_builder -v ./artifacts:/snake/dist snake_builder:latest
                 docker logs snake_builder > ./log/log_builder.txt
                 '''
@@ -42,7 +42,7 @@ pipeline {
                 echo "Testing..."
                 sh '''
                 cd Snake_files
-                docker build -t snake_tester:latest -f ./tests/Dockerfile .
+                docker build --no-cache -t snake_tester:latest -f ./tests/Dockerfile .
                 docker run --name snake_tester -v ./artifacts:/snake/dist snake_tester:latest
                 docker logs snake_tester > ./log/log_tester.txt
                 '''
@@ -53,7 +53,7 @@ pipeline {
                 echo "Deploying..."
                 sh '''
                 cd Snake_files
-                docker build -t snake_deployer:latest -f ./deploy/Dockerfile .
+                docker build --no-cache -t snake_deployer:latest -f ./deploy/Dockerfile .
                 docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
                 docker logs snake_deployer > ./log/log_deployer.txt
                 '''
