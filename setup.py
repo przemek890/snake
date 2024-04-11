@@ -1,10 +1,9 @@
-from setuptools import setup, find_packages
+a jak zrobie tak? from setuptools import setup, find_packages
 
 setup(
     name='Snake',
     version='0.1',
     packages=find_packages(),
-    py_modules=['run'],
     install_requires=[
         'pytest',
         'matplotlib'

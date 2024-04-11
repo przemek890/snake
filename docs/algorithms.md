@@ -124,21 +124,21 @@ Please refer to [my presentation][ppt-dqn] for more details (e.g., environment d
 [wiki-bfs]: https://en.wikipedia.org/wiki/Breadth-first_search
 [wiki-longest-path]: https://en.wikipedia.org/wiki/Longest_path_problem
 
-[src-basesolver]: ../snake/solver/base.py
-[src-pathsolver]: ../snake/solver/path.py
-[src-greedysolver]: ../snake/solver/greedy.py
-[src-hamiltonsolver]: ../snake/solver/hamilton.py
-[src-dqnsolver]: ../snake/solver/dqn/__init__.py
+[src-basesolver]: ../src/snake/solver/base.py
+[src-pathsolver]: ../src/snake/solver/path.py
+[src-greedysolver]: ../src/snake/solver/greedy.py
+[src-hamiltonsolver]: ../src/snake/solver/hamilton.py
+[src-dqnsolver]: ../src/snake/solver/dqn/__init__.py
 
-[img-build-longest]: ./images/build_longest.png
-[img-hamilton-cycle]: ./images/hamilton_cycle.png
-[img-build-hamilton]: ./images/build_hamilton.png
-[img-take-shortcuts]: ./images/take_shortcuts.png
+[img-build-longest]: images/build_longest.png
+[img-hamilton-cycle]: images/hamilton_cycle.png
+[img-build-hamilton]: images/build_hamilton.png
+[img-take-shortcuts]: images/take_shortcuts.png
 
-[img-dqn-4-legends]: ./images/graph_dqn_4_legends.png
-[img-dqn-8-legends]: ./images/graph_dqn_8_legends.png
+[img-dqn-4-legends]: images/graph_dqn_4_legends.png
+[img-dqn-8-legends]: images/graph_dqn_8_legends.png
 
-[ppt-dqn]: ./presentation.pptx
+[ppt-dqn]: presentation.pptx
 
 [ref-shortcuts]: https://johnflux.com/2015/05/02/nokia-6110-part-3-algorithms/
 [ref-dqn]: https://www.nature.com/articles/nature14236

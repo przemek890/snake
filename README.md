@@ -43,11 +43,11 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [snake-cpp]: https://github.com/chuyangliu/snake/tree/7227f5e0f3185b07e9e3de1ac5c19a17b9de3e3c
 
 [doc-tkinter]: https://docs.python.org/3/library/tkinter.html
-[doc-algorithms]: ./docs/algorithms.md
-[doc-greedy]: ./docs/algorithms.md#greedy-solver
-[doc-hamilton]: ./docs/algorithms.md#hamilton-solver
-[doc-dqn]: ./docs/algorithms.md#dqn-solver
+[doc-algorithms]: docs/algorithms.md
+[doc-greedy]: docs/algorithms.md#greedy-solver
+[doc-hamilton]: docs/algorithms.md#hamilton-solver
+[doc-dqn]: docs/algorithms.md#dqn-solver
 
-[demo-hamilton]: ./docs/images/solver_hamilton.gif
-[demo-greedy]: ./docs/images/solver_greedy.gif
-[demo-dqn]: ./docs/images/solver_dqn.gif
+[demo-hamilton]: docs/images/solver_hamilton.gif
+[demo-greedy]: docs/images/solver_greedy.gif
+[demo-dqn]: docs/images/solver_dqn.gif
