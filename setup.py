@@ -9,4 +9,7 @@ setup(
         'pytest',
         'matplotlib'
     ],
+    package_data={
+            'Snake_module': ['run.py'],
+        }
 )
