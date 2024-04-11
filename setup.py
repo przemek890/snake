@@ -8,4 +8,5 @@ setup(
         'pytest',
         'matplotlib'
     ],
+    scripts=['Snake_module/run.py']
 )
