@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
     libtk8.6
 
 
-
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
 
 WORKDIR snake/
