@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     libmemcached-dev \
     tk \
-    tcl
+    tcl \
+    libtk8.6
 
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
@@ -19,7 +20,7 @@ RUN pip install -r requirements.txt
 
 RUN python3 setup.py install
 
-CMD python3 setup.py bdist_wheel && if [ ! -f /snake/dist/*.whl ]; then cp dist/*.whl /snake/dist/; fi
+CMD python3 setup.py bdist_wheel
 
 RUN python3 setup.py clean --all
 
