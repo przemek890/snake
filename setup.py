@@ -8,7 +8,4 @@ setup(
         'pytest',
         'matplotlib'
     ],
-    package_data={
-            'snake': ['run.py'],
-        }
 )
