@@ -6,7 +6,4 @@ WORKDIR /app
 
 RUN pip install --no-cache-dir numpy matplotlib
 
-CMD ["ls -al"]
-
-
 CMD ["python3", "run.py"]

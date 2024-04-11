@@ -1,7 +1,7 @@
-a jak zrobie tak? from setuptools import setup, find_packages
+from setuptools import setup, find_packages
 
 setup(
-    name='Snake',
+    name='Snake_module',
     version='0.1',
     packages=find_packages(),
     install_requires=[
