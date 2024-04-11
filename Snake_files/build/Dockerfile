@@ -15,6 +15,8 @@ RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
 
 WORKDIR snake/
 
+RUN rm -rf /snake/dist/*.whl
+
 RUN pip install -r requirements.txt
 
 RUN python3 setup.py install
