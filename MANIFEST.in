@@ -1,0 +1,3 @@
+include run.py
+recursive-include snake *
+recursive-include tools *
