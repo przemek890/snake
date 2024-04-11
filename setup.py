@@ -1,11 +1,14 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='Snake_module',
     version='0.1',
-    packages=find_packages(),
+    packages=['Snake_module', 'Snake_module.snake', 'Snake_module.tools'],
     install_requires=[
         'pytest',
         'matplotlib'
     ],
+    package_data={
+        'Snake_module': ['run.py'],
+    }
 )

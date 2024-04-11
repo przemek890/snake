@@ -20,7 +20,7 @@ RUN pip install -r requirements.txt
 
 RUN python3 setup.py install
 
-CMD python3 setup.py bdist_wheel
+CMD python3 setup.py bdist_wheel && if [ ! -f /snake/dist/*.whl ]; then cp dist/*.whl /snake/dist/; fi
 
 RUN python3 setup.py clean --all
 
