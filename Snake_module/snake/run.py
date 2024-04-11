@@ -1,6 +1,6 @@
 import argparse
 
-from snake.game import Game, GameConf, GameMode
+from game import Game, GameConf, GameMode
 
 
 def main():
