@@ -2,7 +2,7 @@ FROM python:3.11
 
 COPY --from=snake_builder /snake /app
 
-WORKDIR /app
+WORKDIR /app/snake
 
 RUN pip install --no-cache-dir numpy matplotlib
 
