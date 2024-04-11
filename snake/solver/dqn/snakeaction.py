@@ -1,6 +1,6 @@
 from enum import Enum, unique
 
-from snake.base.direc import Direc
+from base.direc import Direc
 
 
 @unique

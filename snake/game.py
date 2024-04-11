@@ -3,11 +3,11 @@ import os
 import traceback
 from enum import Enum, unique
 
-from snake.base import Direc, Map, PointType, Pos, Snake
-from snake.gui import GameWindow
+from base import Direc, Map, PointType, Pos, Snake
+from gui import GameWindow
 
 # Add solver names to globals()
-from snake.solver import DQNSolver, GreedySolver, HamiltonSolver
+from solver import DQNSolver, GreedySolver, HamiltonSolver
 
 
 @unique

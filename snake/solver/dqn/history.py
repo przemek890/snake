@@ -3,7 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from snake.solver.dqn.logger import log
+from solver.dqn.logger import log
 
 _DIR_LOG = "logs"
 

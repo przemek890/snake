@@ -1,6 +1,6 @@
 import numpy as np
 
-from snake.util.sumtree import SumTree
+from util.sumtree import SumTree
 
 
 class Memory:

@@ -1,5 +1,5 @@
-from snake.base.direc import Direc
-from snake.base.map import Map
-from snake.base.point import Point, PointType
-from snake.base.pos import Pos
-from snake.base.snake import Snake
+from base.direc import Direc
+from base.map import Map
+from base.point import Point, PointType
+from base.pos import Pos
+from base.snake import Snake

@@ -16,12 +16,12 @@ except ImportError:
         "*------------------------------------------------------------------------------*"
     )
 
-from snake.base import Direc, PointType, Pos
-from snake.solver.base import BaseSolver
-from snake.solver.dqn.history import History
-from snake.solver.dqn.logger import log
-from snake.solver.dqn.memory import Memory
-from snake.solver.dqn.snakeaction import SnakeAction
+from base import Direc, PointType, Pos
+from solver.base import BaseSolver
+from solver.dqn.history import History
+from solver.dqn.logger import log
+from solver.dqn.memory import Memory
+from solver.dqn.snakeaction import SnakeAction
 
 _DIR_LOG = "logs"
 
