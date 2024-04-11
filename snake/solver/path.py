@@ -2,8 +2,8 @@ import random
 import sys
 from collections import deque
 
-from base import Direc, PointType
-from solver.base import BaseSolver
+from snake.base import Direc, PointType
+from snake.solver.base import BaseSolver
 
 
 class _TableCell:

@@ -1,9 +1,9 @@
 import random
 from collections import deque
 
-from base.direc import Direc
-from base.point import PointType
-from base.pos import Pos
+from snake.base.direc import Direc
+from snake.base.point import PointType
+from snake.base.pos import Pos
 
 
 class Snake:

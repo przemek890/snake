@@ -1,4 +1,4 @@
-from base.direc import Direc
+from snake.base.direc import Direc
 
 
 class Pos:

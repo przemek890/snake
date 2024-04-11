@@ -1,6 +1,6 @@
-from base.pos import Pos
-from solver.base import BaseSolver
-from solver.path import PathSolver
+from snake.base.pos import Pos
+from snake.solver.base import BaseSolver
+from snake.solver.path import PathSolver
 
 
 class GreedySolver(BaseSolver):

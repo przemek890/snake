@@ -1,6 +1,6 @@
-from base import Direc
-from solver.base import BaseSolver
-from solver.path import PathSolver
+from snake.base import Direc
+from snake.solver.base import BaseSolver
+from snake.solver.path import PathSolver
 
 
 class _TableCell:
