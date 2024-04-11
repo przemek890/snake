@@ -1,4 +1,4 @@
-from snake.base import Direc
+from ../snake.base import Direc
 
 
 def test_opposite():

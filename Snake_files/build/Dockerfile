@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     tk \
     tcl \
     libtk8.6 \
-    git
+    curl
 
 
 

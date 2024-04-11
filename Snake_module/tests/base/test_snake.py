@@ -1,4 +1,4 @@
-from snake.base import Direc, Map, PointType, Pos, Snake
+from ../snake.base import Direc, Map, PointType, Pos, Snake
 
 
 def test_init():

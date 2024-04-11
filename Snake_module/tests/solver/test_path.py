@@ -1,5 +1,5 @@
-from snake.base import Direc, Map, PointType, Pos, Snake
-from snake.solver import PathSolver
+from ../snake.base import Direc, Map, PointType, Pos, Snake
+from ../snake.solver import PathSolver
 
 
 def test_shortest():

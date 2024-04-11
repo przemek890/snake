@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from snake.util.sumtree import SumTree
+from ../snake.util.sumtree import SumTree
 
 
 def test_sumtree():
