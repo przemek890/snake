@@ -124,11 +124,11 @@ Please refer to [my presentation][ppt-dqn] for more details (e.g., environment d
 [wiki-bfs]: https://en.wikipedia.org/wiki/Breadth-first_search
 [wiki-longest-path]: https://en.wikipedia.org/wiki/Longest_path_problem
 
-[src-basesolver]: ../src/Snake_module/snake/solver/base.py
-[src-pathsolver]: ../src/Snake_module/snake/solver/path.py
-[src-greedysolver]: ../src/Snake_module/snake/solver/greedy.py
-[src-hamiltonsolver]: ../src/Snake_module/snake/solver/hamilton.py
-[src-dqnsolver]: ../src/Snake_module/snake/solver/dqn/__init__.py
+[src-basesolver]: ../Snake_module/snake/solver/base.py
+[src-pathsolver]: ../Snake_module/snake/solver/path.py
+[src-greedysolver]: ../Snake_module/snake/solver/greedy.py
+[src-hamiltonsolver]: ../Snake_module/snake/solver/hamilton.py
+[src-dqnsolver]: ../Snake_module/snake/solver/dqn/__init__.py
 
 [img-build-longest]: images/build_longest.png
 [img-hamilton-cycle]: images/hamilton_cycle.png
