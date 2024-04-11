@@ -7,13 +7,13 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     libmemcached-dev \
     tk \
-    tcl \
-    libtk8.6
+    tcl
 
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
 
 WORKDIR snake/
+
 
 RUN pip install -r requirements.txt
 
