@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev \
     tk \
     tcl \
-    libtk8.6 \
-    curl
+    libtk8.6
 
 
 RUN git clone https://$GIT_TOKEN:x-oauth-basic@github.com/przemek890/snake.git
