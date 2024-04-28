@@ -4,6 +4,6 @@ COPY --from=snake_builder /snake /app
 
 WORKDIR /app/snake
 
-# RUN pip install --no-cache-dir numpy matplotlib
+RUN pip install --no-cache-dir numpy matplotlib
 
 CMD ["python3", "run.py"]
