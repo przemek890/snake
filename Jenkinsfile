@@ -6,7 +6,7 @@ pipeline {
         GIT_CRED_ID = 'dad47e07-a5f8-46fc-8c3d-ba0d5ff7ef2f'
         GIT_BRANCH = 'master'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-token')
-        HOST_IP = '192.168.100.83' // may change
+        HOST_IP = '192.168.100.83:0' // may change
     }
 
     triggers {
@@ -72,8 +72,8 @@ pipeline {
                 sh '''
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                 BUILD_NUMBER=''' + env.BUILD_NUMBER + '''
-                docker tag snake_deployer:latest przemek899/snake_deployer:bug
-                docker push przemek899/snake_deployer:bug
+                docker tag snake_deployer:latest przemek899/snake_deployer:latest
+                docker push przemek899/snake_deployer:latest
                 docker logout
                 '''
                 //////////////////////////////////////////////////////////////////
