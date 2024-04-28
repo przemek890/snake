@@ -54,6 +54,8 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build --no-cache -t snake_deployer:latest -f ./deploy/Dockerfile .
+                docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
+                docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
         }
@@ -70,8 +72,8 @@ pipeline {
                 sh '''
                 echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
                 BUILD_NUMBER=''' + env.BUILD_NUMBER + '''
-                docker tag snake_deployer:latest przemek899/snake_deployer:bug
-                docker push przemek899/snake_deployer:bug
+                docker tag snake_deployer:latest przemek899/snake_deployer:latest
+                docker push przemek899/snake_deployer:latest
                 docker logout
                 '''
                 //////////////////////////////////////////////////////////////////
