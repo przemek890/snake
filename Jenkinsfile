@@ -54,8 +54,6 @@ pipeline {
                 sh '''
                 cd Snake_files
                 docker build --no-cache -t snake_deployer:latest -f ./deploy/Dockerfile .
-                // docker run --name snake_deployer -v ./artifacts:/snake/dist -e DISPLAY="${HOST_IP}" snake_deployer:latest
-                // docker logs snake_deployer > ./log/log_deployer.txt
                 '''
             }
         }
